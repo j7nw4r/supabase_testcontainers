@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A Rust implementation of the Supabase [Testcontainers](https://github.com/testcontainers/testcontainers-rs). Currently
+A Rust implementation of the [Supabase](https://supabase.com/) [Testcontainers](https://github.com/testcontainers/testcontainers-rs). Currently
 contains:
 
 - [ ] Analytics
