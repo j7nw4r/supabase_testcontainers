@@ -6,3 +6,4 @@ pub use consts::LOCAL_HOST;
 #[cfg(feature = "auth")]
 mod auth;
 mod consts;
+mod error;

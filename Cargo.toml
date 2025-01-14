@@ -5,13 +5,14 @@ edition = "2021"
 
 [features]
 default = []
-auth = []
+auth = ["testcontainers-modules/postgres"]
 
 [dependencies]
-testcontainers-modules = { version = "0.11.4", features = ["postgres", "redis"] }
+testcontainers-modules = { version = "0.11.4", features = ["postgres"] }
 tokio = { version = "1.24.1", features = ["full"] }
 tokio-postgres = "0.7.11"
 anyhow = "1.0.86"
+thiserror = "2.0.11"
 
 [dev-dependencies]
 testcontainers = "0.23.1"
