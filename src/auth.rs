@@ -9,6 +9,7 @@ use tokio_postgres::NoTls;
 const NAME: &str = "supabase/auth";
 const TAG: &str = "v2.164.0";
 
+#[cfg(feature = "auth")]
 #[derive(Debug, Clone)]
 pub struct Auth {
     env_vars: HashMap<String, String>,

@@ -1,7 +1,11 @@
 [package]
-name = "supabase-testcontainers"
+name = "supabase-testcontainers-modules"
 version = "0.1.0"
 edition = "2021"
+
+[features]
+default = []
+auth = []
 
 [dependencies]
 testcontainers-modules = { version = "0.11.4", features = ["postgres", "redis"] }
