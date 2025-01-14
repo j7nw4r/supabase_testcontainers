@@ -1,0 +1,13 @@
+[package]
+name = "supabase-testcontainers"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+testcontainers-modules = { version = "0.11.4", features = ["postgres", "redis"] }
+tokio = { version = "1.24.1", features = ["full"] }
+tokio-postgres = "0.7.11"
+anyhow = "1.0.86"
+
+[dev-dependencies]
+testcontainers = "0.23.1"
