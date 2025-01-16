@@ -22,9 +22,16 @@ supabase-testcontainers-modules = { version = "0.1.0", features = ["auth"] }
 
 ## Features
 
+- `analytics` - Enables the Supabase Analytics service container support
 - `auth` - Enables the Supabase Auth service container support
 - `const` - Provides constant values used throughout the crate
+- `error` - Enables error handling functionality
+- `functions` - Enables the Edge Functions service container support
+- `graphql` - Enables the GraphQL (pg_graphql) service container support
+- `postgrest` - Enables the PostgREST service container support
 - `postgres_testcontainer` - Enables PostgreSQL container support
+- `realtime` - Enables the Realtime service container support
+- `storage` - Enables the Storage service container support
 
 ## Usage
 
@@ -68,12 +75,12 @@ async fn main() {
 
 ## Current Status
 
-The following Supabase services are planned for implementation:
+The following Supabase services are implemented or planned:
 
 - [ ] Analytics
 - [x] Auth (partially implemented)
-- [ ] Functions
-- [ ] GraphQL
+- [ ] Edge Functions
+- [ ] GraphQL (pg_graphql)
 - [ ] PostgREST
 - [ ] Realtime
 - [ ] Storage
