@@ -1,18 +1,25 @@
 [package]
-name = "supabase-testcontainers-modules"
-version = "0.1.0"
-edition = "2021"
+# Basic package information
+name = "supabase-testcontainers-modules"    # Name of the crate
+version = "0.1.0"                           # Current version using semantic versioning
+edition = "2021"                            # Rust edition being used (2021 is latest stable)
 
 [features]
-default = []
-auth = ["testcontainers-modules/postgres"]
+# Feature flags for optional functionality
+default = []                                # No features enabled by default
+auth = ["const"]                            # Auth feature that depends on const feature
+const = []                                  # Const feature flag
+postgres_testcontainer = []                 # PostgreSQL testcontainer feature flag
 
 [dependencies]
-testcontainers-modules = { version = "0.11.4", features = ["postgres"] }
-tokio = { version = "1.24.1", features = ["full"] }
-tokio-postgres = "0.7.11"
-anyhow = "1.0.86"
-thiserror = "2.0.11"
+# Required external crates for the main code
+testcontainers = { version = "0.23.1", features = ["default"]}              # Core TestContainers library for testing
+testcontainers-modules = { version = "0.11.4", features = ["postgres"] }    # TestContainers with PostgreSQL support
+tokio = { version = "1.24.1" }                                              # Async runtime with all features
+tokio-postgres = "0.7.11"                                                   # PostgreSQL async driver
+anyhow = "1.0.86"                                                           # Error handling library
+thiserror = "2.0.11"                                                        # Custom error derive macros
 
 [dev-dependencies]
-testcontainers = "0.23.1"
+# Dependencies only used for tests
+testcontainers = { version = "0.23.1", features = ["default"]}              # Core TestContainers library for testing

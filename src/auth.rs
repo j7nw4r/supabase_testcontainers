@@ -1,3 +1,9 @@
+/*! Supabase Auth container management module.
+
+This module provides functionality for managing Supabase Auth containers,
+including initialization, configuration, and database schema setup.
+*/
+
 use std::borrow::Cow;
 use std::collections::HashMap;
 
@@ -6,16 +12,21 @@ use testcontainers_modules::testcontainers::core::{ContainerState, ExecCommand, 
 use testcontainers_modules::testcontainers::{Image, TestcontainersError};
 use tokio_postgres::NoTls;
 
+/// Default image name for Supabase Auth
 const NAME: &str = "supabase/auth";
+/// Default image tag version
 const TAG: &str = "v2.164.0";
 
 #[cfg(feature = "auth")]
+/// Represents a Supabase Auth container configuration
 #[derive(Debug, Clone)]
 pub struct Auth {
+    /// Environment variables to be passed to the container
     env_vars: HashMap<String, String>,
 }
 
 impl Auth {
+    /// Creates a new Auth instance with the specified PostgreSQL connection string
     pub fn new(postgres_connection_string: &str) -> Self {
         let mut default_image = Self::default();
         default_image.env_vars.insert(
@@ -25,6 +36,7 @@ impl Auth {
         default_image
     }
 
+    /// Creates a new Auth instance with custom environment variables
     pub fn new_with_env(envs: HashMap<&str, &str>) -> Self {
         let mut default_image = Self::default();
         for (key, val) in envs {
@@ -35,10 +47,25 @@ impl Auth {
         default_image
     }
 
+    /// Returns the Git release version string based on the current tag
     pub fn git_release_version(&self) -> String {
         let version = TAG[1..].to_string();
         format!("release/{}", version)
     }
+
+    /// Initializes the database schema for Supabase Auth
+    /// 
+    /// # Arguments
+    /// * `db_url` - PostgreSQL connection string
+    /// 
+    /// # Returns
+    /// * `anyhow::Result<Self>` - The Auth instance with initialized schema
+    /// 
+    /// # Errors
+    /// Returns an error if:
+    /// * The database URL is empty
+    /// * The DB_NAMESPACE environment variable is not set or empty
+    /// * Database connection or schema creation fails
     pub async fn init_db_schema(self, db_url: &str) -> anyhow::Result<Self> {
         if db_url.is_empty() {
             bail!("db_url cannot be empty");
@@ -79,7 +106,17 @@ impl Auth {
         Ok(self)
     }
 }
+
+/// Default implementation for Auth container configuration
 impl Default for Auth {
+    /// Creates a default Auth instance with pre-configured environment variables
+    /// 
+    /// Sets up default values for:
+    /// * Database connection
+    /// * JWT configuration
+    /// * API endpoints
+    /// * Authentication providers (GitHub, anonymous, phone)
+    /// * Security settings
     fn default() -> Self {
         let mut env_vars = HashMap::new();
         env_vars.insert(
@@ -149,28 +186,42 @@ impl Default for Auth {
     }
 }
 
+/// Implementation of the Image trait for Auth container
 impl Image for Auth {
+    /// Returns the name of the Docker image
     fn name(&self) -> &str {
         NAME
     }
 
+    /// Returns the tag of the Docker image
     fn tag(&self) -> &str {
         TAG
     }
 
+    /// Specifies the conditions that indicate when the container is ready
     fn ready_conditions(&self) -> Vec<WaitFor> {
         vec![]
     }
 
+    /// Returns the environment variables to be passed to the container
     fn env_vars(
         &self,
     ) -> impl IntoIterator<Item = (impl Into<Cow<'_, str>>, impl Into<Cow<'_, str>>)> {
         &self.env_vars
     }
 
+    /// Returns the command to be executed when the container starts
     fn cmd(&self) -> impl IntoIterator<Item = impl Into<Cow<'_, str>>> {
         vec!["auth"]
     }
+
+    /// Executes commands after the container starts
+    /// 
+    /// # Arguments
+    /// * `cs` - Container state
+    /// 
+    /// # Returns
+    /// * `Result<Vec<ExecCommand>, TestcontainersError>` - Commands to execute
     #[allow(unused_variables)]
     fn exec_after_start(
         &self,
@@ -180,16 +231,17 @@ impl Image for Auth {
     }
 }
 
-#[cfg(feature = "auth")]
+/// Test module for Supabase Auth container functionality
+#[cfg(all(test, feature = "auth"))]
 mod test {
     use std::time::Duration;
     use testcontainers::runners::AsyncRunner;
     use testcontainers_modules::postgres::Postgres;
     use tokio::time::sleep;
-    use crate::*;
+    use crate::{Auth, DOCKER_INTERNAL_HOST, LOCAL_HOST};
 
+    /// Tests the default Supabase Auth container setup
     #[tokio::test]
-    #[ignore]
     async fn supabase_auth_default() -> anyhow::Result<()> {
         let postgres_container = Postgres::default().with_host_auth().start().await?;
 
