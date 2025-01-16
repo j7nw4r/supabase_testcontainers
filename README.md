@@ -72,6 +72,9 @@ The following Supabase services are planned for implementation:
 
 - [ ] Analytics
 - [x] Auth (partially implemented)
+- [ ] Functions
+- [ ] GraphQL
+- [ ] PostgREST
 - [ ] Realtime
 - [ ] Storage
 

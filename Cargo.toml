@@ -7,9 +7,16 @@ edition = "2021"                            # Rust edition being used (2021 is l
 [features]
 # Feature flags for optional functionality
 default = []                                # No features enabled by default
-auth = ["const"]                            # Auth feature that depends on const feature
+analytics = ["const"]                       # Analytics service container support
+auth = ["const"]                           # Auth service container support
 const = []                                  # Const feature flag
+error = []                                  # Error handling feature flag
+functions = ["const"]                       # Edge Functions service container support
+graphql = ["const"]                         # GraphQL (pg_graphql) service container support
+postgrest = ["const"]                       # PostgREST service container support
 postgres_testcontainer = []                 # PostgreSQL testcontainer feature flag
+realtime = ["const"]                        # Realtime service container support
+storage = ["const"]                         # Storage service container support
 
 [dependencies]
 # Required external crates for the main code
