@@ -1,4 +1,4 @@
-name: Autofill PR description
+name: PR description Update Action
 
 on:
   pull_request:
