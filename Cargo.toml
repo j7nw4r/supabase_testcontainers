@@ -1,0 +1,44 @@
+[package]
+# Basic package information
+name = "supabase-testcontainers-modules"    # Name of the crate
+version = "1.0.1"                           # Current version using semantic versioning
+edition = "2021"                            # Rust edition being used (2021 is latest stable)
+description = "Testcontainers modules for Supabase services used in integration testing."
+license = "MIT"
+repository = "https://github.com/j7nw4r/supabase_testcontainers"
+homepage = "https://github.com/j7nw4r/supabase_testcontainers"
+documentation = "https://docs.rs/supabase-testcontainers-modules"
+readme = "README.md"
+keywords = ["supabase", "testcontainers", "integration-tests", "containers", "postgresql"]
+categories = ["development-tools::testing", "database"]
+rust-version = "1.75"
+
+[features]
+# Feature flags for optional functionality
+default = []                                # No features enabled by default
+analytics = ["const"]                       # Analytics service container support
+auth = ["const"]                           # Auth service container support
+const = []                                  # Const feature flag
+error = []                                  # Error handling feature flag
+functions = ["const"]                       # Edge Functions service container support
+graphql = ["const"]                         # GraphQL (pg_graphql) service container support
+postgrest = ["const"]                       # PostgREST service container support
+postgres_testcontainer = []                 # PostgreSQL testcontainer feature flag
+realtime = ["const"]                        # Realtime service container support
+storage = ["const"]                         # Storage service container support
+
+[dependencies]
+# Required external crates for the main code
+testcontainers = { version = "0.25.2", features = ["default"]}              # Core TestContainers library for testing
+testcontainers-modules = { version = "0.13.0", features = ["postgres"] }    # TestContainers with PostgreSQL support
+tokio = { version = "1.48.0" }                                              # Async runtime with all features
+tokio-postgres = "0.7.15"                                                   # PostgreSQL async driver
+anyhow = "1.0.100"                                                           # Error handling library
+thiserror = "2.0.17"                                                        # Custom error derive macros
+
+[dev-dependencies]
+# Dependencies only used for tests
+testcontainers = { version = "0.25.2", features = ["default"] }
+tokio = { version = "1.48.0", features = ["full", "test-util"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde_json = "1.0"

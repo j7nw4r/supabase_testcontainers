@@ -1,0 +1,41 @@
+/*! A library for managing Supabase containers in tests.
+
+This crate provides utilities for setting up and managing Supabase services
+in a containerized environment, primarily for testing purposes.
+*/
+
+#[cfg(feature = "analytics")]
+pub use analytics::{Analytics, ANALYTICS_PORT};
+#[cfg(feature = "auth")]
+pub use auth::{Auth, AUTH_PORT};
+#[cfg(feature = "const")]
+pub use consts::*;
+#[cfg(feature = "functions")]
+pub use functions::{Functions, FUNCTIONS_PORT};
+#[cfg(feature = "graphql")]
+pub use graphql::{GraphQL, GRAPHQL_PORT};
+#[cfg(feature = "postgrest")]
+pub use postgrest::{PostgREST, POSTGREST_PORT};
+#[cfg(feature = "realtime")]
+pub use realtime::{Realtime, REALTIME_PORT};
+#[cfg(feature = "storage")]
+pub use storage::{Storage, STORAGE_PORT};
+
+#[cfg(feature = "analytics")]
+mod analytics;
+#[cfg(feature = "auth")]
+mod auth;
+#[cfg(feature = "const")]
+mod consts;
+#[cfg(feature = "error")]
+mod error;
+#[cfg(feature = "functions")]
+mod functions;
+#[cfg(feature = "graphql")]
+mod graphql;
+#[cfg(feature = "postgrest")]
+mod postgrest;
+#[cfg(feature = "realtime")]
+mod realtime;
+#[cfg(feature = "storage")]
+mod storage;
